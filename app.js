@@ -26,21 +26,60 @@ readDir().then((files) => {
     const fileData = nodeID3.read(`${mp3DirPath}/${file}`);
     // console.log(fileData);
     return {
-      schema: "ipfs:\/\/QmNpi8rcXEkohca8iXu7zysKKSJYqCvBJn3xJwga8jXqWU",
+      schema: "ipfs:\/\/~~IPFS LINK TO AUDIO.V0 SCHEMA HERE~~",
       nftType: "audio.v0",
       description: "From " + fileData.album + " by " + fileData.artist,
       image: 'ipfs://bafybeicek6shpkabae3ozzsyblkoedf5fvdhxyezwnvcydbb5xv7avqeq4',
-      fileUrl: `URI for ${file}`,
-      title: fileData.title,
-      artist: fileData.artist,
-      album: fileData.album,
-      performer: fileData.performerInfo,
-      composer: fileData.composer,
-      trackNumber: fileData.trackNumber,
-      discNumer: fileData.partOfSet,
-      genre: fileData.genre,
-      bpm: fileData.bpm,
-      fileSize: stats.size
+      audio: `URI for ${file}`,
+      externalURL: "https:\/\/twitter.com\/JoshuaHamsa",
+      attributes: 
+      [
+        {
+          "trait_type": "Title",
+          "value": fileData.title
+        },
+        {
+          "trait_type": "Artist",
+          "value": fileData.artist
+        },
+        {
+          "trait_type": "Album",
+          "value": fileData.album
+        },
+        {
+          "trait_type": "Performer",
+          "value": fileData.performerInfo
+        },
+        {
+          "trait_type": "Composer",
+          "value": fileData.composer
+        },
+        {
+          "trait_type": "Track Number",
+          "value": fileData.trackNumber
+        },
+        {
+          "trait_type": "Disc Number",
+          "value": fileData.partOfSet
+        },
+        {
+          "trait_type": "Genre",
+          "value": fileData.genre
+        },
+        {
+          "trait_type": "BPM",
+          "value": fileData.bpm
+        },
+        {
+          "trait_type": "File Size",
+          "value": stats.size
+        },
+        {
+          "trait_type": "License",
+          "value": "CC0"
+        }
+        
+      ]
     };
   });
   fs.writeFile('data.json', JSON.stringify(output, null, 2), 'utf8', (err) => {
