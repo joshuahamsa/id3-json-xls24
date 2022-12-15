@@ -5,7 +5,7 @@ const nodeID3 = require('node-id3');
 
 const CliProgress = require('cli-progress');
 
-const mp3DirPath = './mp3';
+const mp3DirPath = 'mp3';
 const progress = new CliProgress.Bar({}, CliProgress.Presets.shades_classic);
 
 async function readDir() {
@@ -26,16 +26,24 @@ readDir().then((files) => {
     const fileData = nodeID3.read(`${mp3DirPath}/${file}`);
     // console.log(fileData);
     return {
+      schema: "ipfs:\/\/QmNpi8rcXEkohca8iXu7zysKKSJYqCvBJn3xJwga8jXqWU",
+      nftType: "audio.v0",
+      description: "From " + fileData.album + " by " + fileData.artist,
+      image: 'ipfs://bafybeicek6shpkabae3ozzsyblkoedf5fvdhxyezwnvcydbb5xv7avqeq4',
+      fileUrl: `URI for ${file}`,
       title: fileData.title,
-      speaker: fileData.artist,
-      date: moment(file.replace(/\D+/g, ''), 'YYYYMMDD'),
-      image: '/assets/img/audio.jpg',
-      status: 'published',
-      fileUrl: `https://s3-us-west-2.amazonaws.com/newseed-prod/sermons/olive-tree/${file}`,
+      artist: fileData.artist,
+      album: fileData.album,
+      performer: fileData.performerInfo,
+      composer: fileData.composer,
+      trackNumber: fileData.trackNumber,
+      discNumer: fileData.partOfSet,
+      genre: fileData.genre,
+      bpm: fileData.bpm,
       fileSize: stats.size
     };
   });
-  fs.writeFile('data.json', JSON.stringify(output), 'utf8', (err) => {
+  fs.writeFile('data.json', JSON.stringify(output, null, 2), 'utf8', (err) => {
     if (err) {
       console.error(chalk.red(err));
       throw err;
